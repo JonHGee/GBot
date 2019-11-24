@@ -7,19 +7,38 @@ A Discord bot used for tracking emoji usage(with a few extra functionalities)
 This bot is built using node.js.  It interfaces with MongoDB to store emoji usage in two collections () emojis by server, and emojis by user).
 It also connects to several web APIs to generate compliments and insults.
 
-## Commands currently supported
+# Commands currently supported
 All commands currently support tagging users. i.e if you send command !i @jon, the bot will also tag @jon it it's response.
+
+## estat (cmd)
+All emoji usage tracking is done through the estat command.  If no cmd is specified, the bot returns a list of most used emojis on the server.  If a cmd that is not supported is given, the bot will assume print an error in console.
+
+### Most used emojis in server - estat
+```
+!estat
+```
+Returns a list of the 10 most used emojis on the server.  Custom emojis that the bot has access to and native emojis will be displayed.  Custom emojis that the bot does not have access to will be displayed in :emoji: format.
+
+### Least used custom emojis in server - estat here
+```
+!estat here
+```
+Returns a list of the 10 least used custom emojis of the current server.
+
+### Most emojis used by a user - estat @user
+```
+!estat @user
+```
+Looks up the top 10 most used emojis by the tagged user.  Custom emojis that the bot has access to and native emojis will be displayed.  Custom emojis that the bot does not have access to will be displayed in :emoji: format.
+
+## Other commands
 
 ### help
 ```
 !help
 ```
 Sends a list of supported commands to the channel
-'```Commands currently supported \n'+
-				'!help: command list \n'+
-				'!compliment/!c (name): sends a compliment\n'+
-				'!insult/!i (name): sends an insult\n'+
-				'!insult2/!i2 (name): sends a randomly generated insult```'
+
 ### compliment
 ```
 !c (name)
@@ -41,4 +60,3 @@ Name field optional.  Generates an insult from https://evilinsult.com/
 ```
 Name field optional.  Generates an insult from 'https://insult.mattbas.org/.  These are procedurally generated from a template.
 
-### estat (cmd)
