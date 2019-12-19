@@ -1,6 +1,7 @@
 var Discord = require('discord.js');
 var auth = require('./auth.json');
 var ci = require('./ci.js');
+var gpt = require('./gpt.js');
 var estat = require('./estat.js');
 const fuzzyset = require('fuzzyset.js');
 const mongo = require('mongodb').MongoClient;
@@ -13,11 +14,6 @@ const uri = auth.db;
 const bot = new Discord.Client();
 bot.login(auth.token);
 
-//Map of custom server emojis the bot has access to
-//Initialized when the bot connects to discord
-const elist = new Map();
-
-
 //Bot startup. Gives a console confirmation, updates database with any new custom emojis, and populates custom emoji list
 bot.on('ready', function (evt) {
     console.log('Connected');
@@ -25,6 +21,7 @@ bot.on('ready', function (evt) {
 	console.log(bot.user.tag);
 	bot.user.setActivity("you ( ͡° ͜ʖ ͡°)", {type: "WATCHING"});
 	estat.init(bot);
+	gpt.init(bot);
 	/*
 	bot.guilds.forEach((guild) => {
         console.log(" - " + guild.name);
@@ -110,10 +107,21 @@ bot.on('message', (message) => {
 				}
 				break;
 			
-			
 			case 'estat':
 				estat.estat(message, args, elist, bot);
 				break;
+				
+			case 'gpt':
+				gpt.gpt(message, args, bot);
+				break;
+				
+			case 'roll':
+				gpt.roll(message, args, bot);
+				break;
+				
+			case 'bet':
+				gpt.bet(message, args, bot);
+				break;				
             // Just add any case commands if you want to..
         }
     }
